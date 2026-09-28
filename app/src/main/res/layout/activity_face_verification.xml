@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+<androidx.camera.view.PreviewView android:id="@+id/preview"
+    android:layout_width="match_parent" android:layout_height="match_parent"/>
+<TextView android:id="@+id/faceMessage" android:text="Position your face in the camera."
+    android:textColor="#FFFFFF" android:textSize="18sp" android:background="#99000000"
+    android:padding="16dp" android:layout_gravity="bottom"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</FrameLayout>
