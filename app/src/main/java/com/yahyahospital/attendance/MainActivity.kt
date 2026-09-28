@@ -34,8 +34,19 @@ class MainActivity : AppCompatActivity() {
         status = findViewById(R.id.status)
         findViewById<com.google.android.material.button.MaterialButton>(R.id.checkIn).setOnClickListener { startAttendance("CHECK_IN") }
         findViewById<com.google.android.material.button.MaterialButton>(R.id.checkOut).setOnClickListener { startAttendance("CHECK_OUT") }
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.dashboard).setOnClickListener { openDashboard() }
         findViewById<com.google.android.material.button.MaterialButton>(R.id.admin).setOnClickListener { showAdminDialog() }
     }
+    private fun openDashboard() {
+        val id = findViewById<TextInputEditText>(R.id.employeeId).text?.toString()?.trim().orEmpty()
+        val pin = findViewById<TextInputEditText>(R.id.pin).text?.toString()?.trim().orEmpty()
+        if (!id.equals(DEMO_ID, true) || pin != DEMO_PIN) {
+            status.text = "Invalid credentials. Demo: EMP001 / 1234"
+            return
+        }
+        startActivity(Intent(this, DashboardActivity::class.java).putExtra("employee_id", id))
+    }
+
     private fun startAttendance(action: String) {
         val id = findViewById<TextInputEditText>(R.id.employeeId).text?.toString()?.trim().orEmpty()
         val pin = findViewById<TextInputEditText>(R.id.pin).text?.toString()?.trim().orEmpty()
