@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout android:orientation="vertical" android:padding="24dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+<TextView android:text="Yahya Hospital" android:textSize="30sp" android:textStyle="bold"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<TextView android:text="Attendance System" android:textSize="18sp" android:layout_marginBottom="24dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+<com.google.android.material.textfield.TextInputEditText android:id="@+id/employeeId" android:hint="Employee ID"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+<com.google.android.material.textfield.TextInputEditText android:id="@+id/pin" android:hint="PIN"
+    android:inputType="numberPassword" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.button.MaterialButton android:id="@+id/checkIn" android:text="Check In"
+    android:layout_marginTop="18dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<com.google.android.material.button.MaterialButton android:id="@+id/checkOut" android:text="Check Out"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<com.google.android.material.button.MaterialButton android:id="@+id/admin" android:text="Admin / Settings"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<TextView android:id="@+id/status" android:text="Ready" android:textSize="16sp" android:layout_marginTop="20dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
+</ScrollView>
