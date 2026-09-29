@@ -28,7 +28,7 @@ jobs:
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/yahya-upload-key.jks"
+          printf "%s" "$KEYSTORE_BASE64" | base64 --ignore-garbage --decode > "$RUNNER_TEMP/yahya-upload-key.jks"
           test -s "$RUNNER_TEMP/yahya-upload-key.jks"
 
       - name: Build signed Android App Bundle
