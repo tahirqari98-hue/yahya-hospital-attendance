@@ -19,6 +19,8 @@
     android:layout_marginTop="18dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 <com.google.android.material.button.MaterialButton android:id="@+id/checkOut" android:text="Check Out"
     android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<com.google.android.material.button.MaterialButton android:id="@+id/dashboard" android:text="Employee Dashboard"
+    android:layout_width="match_parent" android:layout_height="wrap_content"/>
 <com.google.android.material.button.MaterialButton android:id="@+id/admin" android:text="Admin / Settings"
     android:layout_width="match_parent" android:layout_height="wrap_content"/>
 <TextView android:id="@+id/status" android:text="Ready" android:textSize="16sp" android:layout_marginTop="20dp"
