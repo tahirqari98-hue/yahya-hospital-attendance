@@ -1,0 +1,16 @@
+package com.yahyahospital.attendance
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+
+class EmployeeAdminActivity:AppCompatActivity(){
+ private lateinit var list:LinearLayout
+ override fun onCreate(b:Bundle?){super.onCreate(b);setContentView(R.layout.activity_employee_admin);list=findViewById(R.id.employeeList);findViewById<Button>(R.id.addEmployee).setOnClickListener{showEditor(null)};findViewById<Button>(R.id.exportAll).setOnClickListener{exportDialog()};render()}
+ private fun render(){list.removeAllViews();val es=EmployeeStore.all(this);if(es.isEmpty())addText("No employees registered.");es.forEach{e->val row=LinearLayout(this).apply{orientation=LinearLayout.VERTICAL;setPadding(8,12,8,12)};row.addView(TextView(this).apply{text=e.id+" — "+e.name+"\n"+e.designation+" | "+e.department+"\nFace: "+if(e.faceSignature.isBlank())"Not enrolled" else "Enrolled";textSize=16f});val bs=LinearLayout(this);bs.addView(Button(this).apply{text="Edit";setOnClickListener{showEditor(e)}});bs.addView(Button(this).apply{text="Register Face";setOnClickListener{startActivity(Intent(this@EmployeeAdminActivity,FaceEnrollmentActivity::class.java).putExtra("employee_id",e.id))}});bs.addView(Button(this).apply{text="Delete";setOnClickListener{AlertDialog.Builder(this@EmployeeAdminActivity).setTitle("Delete "+e.name+"?").setMessage("Attendance records will remain.").setPositiveButton("Delete"){_,_->EmployeeStore.delete(this@EmployeeAdminActivity,e.id);render()}.setNegativeButton("Cancel",null).show()}});row.addView(bs);list.addView(row)}}
+ private fun showEditor(x:Employee?){val box=LinearLayout(this).apply{orientation=LinearLayout.VERTICAL;setPadding(20,8,20,0)};fun f(h:String,v:String="")=EditText(this).apply{hint=h;setText(v)};val id=f("Employee ID",x?.id.orEmpty());val name=f("Full name",x?.name.orEmpty());val dep=f("Department",x?.department.orEmpty());val des=f("Designation",x?.designation.orEmpty());val phone=f("Phone",x?.phone.orEmpty());val pin=f("Employee PIN",x?.pin.orEmpty());pin.inputType=2;if(x!=null)id.isEnabled=false;listOf(id,name,dep,des,phone,pin).forEach{box.addView(it)};AlertDialog.Builder(this).setTitle(if(x==null)"Add Employee" else "Edit Employee").setView(box).setPositiveButton("Save"){_,_->if(id.text.toString().trim().isBlank()||name.text.toString().trim().isBlank())Toast.makeText(this,"Employee ID and name are required.",Toast.LENGTH_SHORT).show()else{EmployeeStore.save(this,Employee(id.text.toString().trim(),name.text.toString().trim(),dep.text.toString().trim(),des.text.toString().trim(),phone.text.toString().trim(),pin.text.toString().trim(),x?.faceSignature.orEmpty()));render()}}.setNegativeButton("Cancel",null).show()}
+ private fun exportDialog(){val items=arrayOf("Today's attendance","This month's attendance","All attendance");AlertDialog.Builder(this).setTitle("Excel Attendance Report").setItems(items){_,w->val mode=when(w){0->"daily";1->"monthly";else->"all"};ExcelExporter.create(this,mode)?.let{ExcelExporter.share(this,it)}?:Toast.makeText(this,"No records to export.",Toast.LENGTH_SHORT).show()}} 
+ private fun addText(s:String){list.addView(TextView(this).apply{text=s;textSize=16f;setPadding(8,20,8,20)})}
+}
