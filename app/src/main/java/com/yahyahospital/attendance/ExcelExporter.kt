@@ -39,5 +39,5 @@ object ExcelExporter {
         }
         context.startActivity(Intent.createChooser(intent, "Share attendance Excel/CSV"))
     }
-    private fun csv(s: String): String = """ + s.replace(""", """") + """
+    private fun csv(s: String): String = "\"" + s.replace("\"", "\"\"") + "\""
 }
