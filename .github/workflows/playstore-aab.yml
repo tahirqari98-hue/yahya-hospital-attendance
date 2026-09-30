@@ -39,10 +39,26 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: gradle --no-daemon bundleRelease
 
+      - name: Build signed APK
+        env:
+          KEYSTORE_FILE: ${{ runner.temp }}/yahya-upload-key.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: gradle --no-daemon assembleRelease
+
       - name: Upload Play Store AAB
         uses: actions/upload-artifact@v4
         with:
           name: yahya-hospital-attendance-release-aab
           path: app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: yahya-hospital-attendance-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
           retention-days: 30
